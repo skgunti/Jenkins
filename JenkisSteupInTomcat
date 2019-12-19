@@ -1,0 +1,78 @@
+
+Step 1: Install Java Version 8
+To install Java version 8 execute the below command:
+
+sudo yum install java-1.8.0-openjdk
+
+
+Step 2: Install Apache Tomcat 9
+In order to install Jenkins we need to deploy the Jenkins war file by using Apache Tomcat. 
+I will use wget command to install specific version of Apache Tomcat i.e. Tomcat 9 in this case.
+
+First, to install wget execute the below command:
+
+sudo yum install wget
+
+Now I will use wget to download the Tar file for Tomcat 9 using the below command:
+
+wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M10/bin/apache-tomcat-9.0.0.M10.tar.gz
+
+Next, I will show you how to extract the contents from this downloaded Tomcat 9 tar file. For this I will use tar command:
+
+tar xzf apache-tomat-9.0.0.M10.tar.gz
+
+To make it simple I will move this extracted file to a new directory Tomcat9 using the mv command and to do that I will execute the following command: 
+
+mv apache-tomcat-9.0.0.M10 tomcat9
+
+Our next step is to provide a username and password for Apache Tomcat and for that I will use gedit editor, you can use any other editor as per your comfort.
+
+gedit /home/sampletom/tomcat9/conf/tomcat-users.xml
+
+Now delete the content of the tomcat-users.xml file. Copy the below block and paste it in tomcat-users.xml file. 
+
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+    <role rolename="manager-gui"/>
+    <role rolename="manager-script"/>
+    <role rolename="manager-jmx"/>
+    <role rolename="manager-jmx"/>
+    <role rolename="admin-gui"/>
+    <role rolename="admin-script"/>
+    <user username="sampletom" password="sampletom" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+</tomcat-users>
+
+
+To start Tomcat use the below command:
+
+cd tomcat9
+
+./bin/startup.sh
+
+So, Tomcat has now started.
+
+Now open your browser and access localhost:8080 to confirm that Tomcat is up and running. For your information port 8080 is the default port for Apache Tomcat
+
+Install Apache Tomcat Version 9 – Tomcat is required to deploy Jenkins war file.
+
+Step 3: Download Jenkins war File
+I will again use the wget command to download Jenkins war (web archive) file. To get the release list of Jenkins war you can use the URL Jenkins releases
+
+Go back to the terminal and move to the home directory by executing the below command.
+
+cd
+
+Now download Jenkins war file by using wget command:
+
+wget http://updates.jenkins-ci.org/download/war/2.7.3/jenkins.war
+
+Step 4: Deploy Jenkins war File 
+To deploy Jenkins war file that you have downloaded in the previous step, open your browser and access localhost:8080 again. 
+Now click on the Manager App.
+username and password and click OK.
+
+Username: sampletom
+Password: sampletom
+Now you will be directed to  Tomcat web application manager page. When you scroll down you will find an option called Deploy. Over here you need to give the context path, i.e. /jenkins and directory URL, 
+i.e. location of the Jenkins war file in your system in my case it is /home/sampletom/jenkins.war and finally click on Deploy.
+
